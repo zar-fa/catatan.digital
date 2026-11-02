@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Buku Saku Belajar & Kerja</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,50 +23,62 @@
     }
   </script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen transition-colors duration-200 antialiased selection:bg-blue-500 selection:text-white">
 
   <!-- Header & Navigation Bar -->
   <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between py-2 sm:py-0 sm:h-16 gap-2 sm:gap-0">
         
         <!-- Logo & Title -->
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
-            <i class="fa-solid fa-briefcase"></i>
+        <div class="flex items-center justify-between w-full sm:w-auto">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg sm:text-xl shadow-md shrink-0">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <div>
+              <h1 class="font-bold text-sm sm:text-lg leading-tight">Work & Learn Log</h1>
+              <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">Buku Saku Belajar & Eksekusi Kerja</p>
+            </div>
           </div>
-          <div>
-            <h1 class="font-bold text-base sm:text-lg leading-tight">Work & Learn Log</h1>
-            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Buku Saku Belajar & Eksekusi Kerja</p>
+
+          <!-- Mobile Dark Mode & Sync Trigger -->
+          <div class="flex sm:hidden items-center space-x-1.5">
+            <div id="syncBtnMobile" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <i id="syncIconMobile" class="fa-solid fa-cloud text-slate-400"></i>
+            </div>
+            <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+              <i class="darkModeIconMobile fa-solid fa-moon text-xs"></i>
+            </button>
           </div>
         </div>
 
         <!-- Mode Toggle, Sync Status & Navigation Tabs -->
-        <div class="flex items-center space-x-2 sm:space-x-3">
-
-          <!-- Sync Indicator (Visual status saja) -->
-          <div id="syncBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300">
-            <i id="syncIcon" class="fa-solid fa-cloud text-slate-400"></i>
-            <span id="syncText" class="hidden md:inline">Syncing...</span>
-          </div>
+        <div class="flex items-center justify-between w-full sm:w-auto space-x-2 sm:space-x-3">
 
           <!-- Main Tabs -->
-          <nav class="flex bg-slate-100 dark:bg-slate-700/60 p-1 rounded-xl text-xs sm:text-sm font-medium">
-            <button id="tabBelajarBtn" onclick="switchTab('belajar')" class="flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+          <nav class="flex bg-slate-100 dark:bg-slate-700/60 p-1 rounded-xl text-xs sm:text-sm font-medium w-full sm:w-auto">
+            <button id="tabBelajarBtn" onclick="switchTab('belajar')" class="flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300">
               <i class="fa-solid fa-graduation-cap"></i>
-              <span class="hidden sm:inline">Halaman</span> <span>Belajar</span>
+              <span>Belajar</span>
             </button>
 
-            <button id="tabKerjaBtn" onclick="switchTab('kerja')" class="flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+            <button id="tabKerjaBtn" onclick="switchTab('kerja')" class="flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300">
               <i class="fa-solid fa-bolt"></i>
-              <span class="hidden sm:inline">Eksekusi</span> <span>Kerja</span>
-              <span id="badgeJobCount" class="bg-blue-600 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full ml-1">0</span>
+              <span>Eksekusi</span>
+              <span id="badgeJobCount" class="bg-blue-600 text-white text-[10px] sm:text-xs px-1.5 py-0.2 rounded-full ml-1">0</span>
             </button>
           </nav>
 
-          <!-- Dark Mode Toggle -->
-          <button onclick="toggleDarkMode()" class="p-2 sm:p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="Ubah Tema">
-            <i id="darkModeIcon" class="fa-solid fa-moon"></i>
+          <!-- Sync Indicator (Desktop) -->
+          <div id="syncBtn" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 shrink-0">
+            <i id="syncIcon" class="fa-solid fa-cloud text-slate-400"></i>
+            <span id="syncText" class="hidden md:inline">Local Mode</span>
+          </div>
+
+          <!-- Dark Mode Toggle (Desktop) -->
+          <button onclick="toggleDarkMode()" class="hidden sm:block p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition shrink-0" title="Ubah Tema">
+            <i class="darkModeIconDesktop fa-solid fa-moon"></i>
           </button>
         </div>
 
@@ -75,30 +87,30 @@
   </header>
 
   <!-- Main Content Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
 
     <!-- ========================================== -->
     <!-- TAB 1: HALAMAN BELAJAR (INPUT & MANAJEMEN) -->
     <!-- ========================================== -->
-    <section id="pageBelajar" class="space-y-6">
+    <section id="pageBelajar" class="space-y-4 sm:space-y-6">
       
       <!-- Top Banner -->
-      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden">
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-4 sm:p-6 shadow-md relative overflow-hidden">
         <div class="relative z-10">
-          <h2 class="text-xl sm:text-2xl font-bold mb-1">Pusat Catatan & Pemahaman Kerja</h2>
-          <p class="text-blue-100 text-xs sm:text-sm max-w-2xl">
-            Tuliskan alur kerja baru, pihak terkait/departemen, dan langkah-langkah pengerjaannya di sini. Catatan ini akan otomatis tersimpan di Google Sheets dan siap dieksekusi kapan saja.
+          <h2 class="text-lg sm:text-2xl font-bold mb-1">Pusat Catatan Belajar Kerja</h2>
+          <p class="text-blue-100 text-xs sm:text-sm max-w-2xl leading-relaxed">
+            Tuliskan alur kerja baru, pihak/dept terkait, dan langkah-langkah pengerjaannya di sini. Catatan ini tersimpan otomatis & siap dieksekusi.
           </p>
         </div>
-        <i class="fa-solid fa-book-open text-white/10 text-8xl sm:text-9xl absolute -right-4 -bottom-8"></i>
+        <i class="fa-solid fa-book-open text-white/10 text-6xl sm:text-9xl absolute -right-4 -bottom-6 sm:-bottom-8"></i>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
 
         <!-- Form Input Belajar Baru (Left Side) -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
           <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 id="formTitle" class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-base">
+            <h3 id="formTitle" class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm sm:text-base">
               <i class="fa-solid fa-plus-circle text-blue-600"></i> Catat Pekerjaan Baru
             </h3>
             <button id="cancelEditBtn" onclick="resetForm()" class="hidden text-xs text-rose-500 hover:underline">
@@ -106,49 +118,49 @@
             </button>
           </div>
 
-          <form id="jobForm" onsubmit="saveJob(event)" class="space-y-4">
+          <form id="jobForm" onsubmit="saveJob(event)" class="space-y-3.5 sm:space-y-4">
             <input type="hidden" id="jobId">
 
             <!-- Nama Pekerjaan -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
-                Nama Pekerjaan / Prosedur <span class="text-rose-500">*</span>
+              <label class="block text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
+                Nama Pekerjaan / SOP <span class="text-rose-500">*</span>
               </label>
               <input type="text" id="jobTitle" required placeholder="Contoh: Pengajuan Refund / Rekonsiliasi Bank" 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition">
+                class="w-full px-3 py-2 sm:py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition">
             </div>
 
             <!-- Departemen / Pihak Terkait -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
-                Alur Ke Dept / Pihak Mana? <span class="text-rose-500">*</span>
+              <label class="block text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
+                Alur Dept / Pihak Terkait <span class="text-rose-500">*</span>
               </label>
               <input type="text" id="jobDept" required placeholder="Contoh: Dept Finance & IT Support" 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition">
+                class="w-full px-3 py-2 sm:py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition">
             </div>
 
             <!-- Kategori Pekerjaan -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
+              <label class="block text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                 Kategori Pekerjaan
               </label>
-              <input type="text" id="jobCategory" placeholder="Contoh: Harian, Keuangan, SOP" 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition">
+              <input type="text" id="jobCategory" placeholder="Contoh: Harian, Keuangan, Trouble" 
+                class="w-full px-3 py-2 sm:py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition">
             </div>
 
             <!-- Catatan Singkat & Tips -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
+              <label class="block text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1">
                 Catatan Penting / Syarat Dokumen
               </label>
-              <textarea id="jobNotes" rows="2" placeholder="Catatan khusus, syarat berkas, kontak PIC, atau link spreadsheet pendukung..." 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition"></textarea>
+              <textarea id="jobNotes" rows="2" placeholder="Catatan khusus, syarat berkas, kontak PIC, atau info pendukung..." 
+                class="w-full px-3 py-2 sm:py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition"></textarea>
             </div>
 
             <!-- Langkah-Langkah Pengerjaan (Dynamic Step Inputs) -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
-                Cara Mengerjakannya (Langkah-Langkah) <span class="text-rose-500">*</span>
+              <label class="block text-[11px] sm:text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
+                Cara Mengerjakannya (Langkah SOP) <span class="text-rose-500">*</span>
               </label>
 
               <!-- Steps List Container -->
@@ -163,24 +175,24 @@
             </div>
 
             <!-- Action Submit -->
-            <button type="submit" id="saveBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm">
+            <button type="submit" id="saveBtn" class="w-full py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
               <i class="fa-solid fa-floppy-disk"></i> Simpan Catatan Belajar
             </button>
           </form>
         </div>
 
         <!-- Daftar Catatan Belajar (Right Side) -->
-        <div class="lg:col-span-7 space-y-4">
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row gap-3 items-center justify-between">
-            <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-base">
+        <div class="lg:col-span-7 space-y-3.5 sm:space-y-4">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 sm:p-4 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <h3 class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto">
               <i class="fa-solid fa-list-check text-blue-600"></i> Master Catatan Belajar
             </h3>
             
             <!-- Quick Filter in Belajar -->
             <div class="relative w-full sm:w-64">
               <input type="text" id="searchBelajar" oninput="renderBelajarList()" placeholder="Cari di catatan..." 
-                class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                class="w-full pl-8 pr-3 py-1.5 sm:py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 sm:top-3 text-slate-400 text-xs"></i>
             </div>
           </div>
 
@@ -196,54 +208,54 @@
     <!-- ========================================== -->
     <!-- TAB 2: HALAMAN KERJA (PUSAT EKSEKUSI & CARI) -->
     <!-- ========================================== -->
-    <section id="pageKerja" class="hidden space-y-6">
+    <section id="pageKerja" class="hidden space-y-4 sm:space-y-6">
 
       <!-- Big Search Banner -->
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 shadow-md border border-slate-200 dark:border-slate-700 text-center space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-md border border-slate-200 dark:border-slate-700 text-center space-y-3 sm:space-y-4">
         <div class="max-w-2xl mx-auto">
-          <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-full uppercase tracking-wider inline-block mb-2">
+          <span class="px-2.5 py-0.5 sm:px-3 sm:py-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] sm:text-xs font-semibold rounded-full uppercase tracking-wider inline-block mb-1 sm:mb-2">
             Mode Eksekusi Kerja
           </span>
-          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Mau ngerjain tugas apa hari ini?</h2>
+          <h2 class="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">Mau ngerjain tugas apa hari ini?</h2>
           <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Ketik nama pekerjaan, nama pihak/departemen, atau kata kunci lainnya untuk langsung membuka instruksi pengerjaannya.
+            Ketik nama pekerjaan/departemen untuk membuka instruksi pengerjaan.
           </p>
         </div>
 
         <!-- Interactive Search Bar -->
         <div class="max-w-2xl mx-auto relative">
           <input type="text" id="searchKerja" oninput="renderKerjaList()" placeholder="Cari nama pekerjaan / alur dept..." 
-            class="w-full pl-11 pr-16 py-3 rounded-2xl border-2 border-blue-500/30 focus:border-blue-600 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 text-sm sm:text-base font-medium shadow-inner outline-none transition">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-base"></i>
-          <button onclick="clearSearchKerja()" class="absolute right-3 top-2.5 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-200 dark:bg-slate-700 px-2.5 py-1 rounded-lg">
+            class="w-full pl-9 sm:pl-11 pr-14 sm:pr-16 py-2.5 sm:py-3 rounded-2xl border-2 border-blue-500/30 focus:border-blue-600 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 text-xs sm:text-base font-medium shadow-inner outline-none transition">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 sm:left-4 top-3 sm:top-3.5 text-slate-400 text-sm sm:text-base"></i>
+          <button onclick="clearSearchKerja()" class="absolute right-2.5 top-2 sm:top-2.5 text-[11px] sm:text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded-lg">
             Reset
           </button>
         </div>
 
         <!-- Filter Badges / Quick Categories -->
-        <div id="categoryChips" class="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <div id="categoryChips" class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1">
           <!-- Rendered dynamically -->
         </div>
       </div>
 
       <!-- Execution Layout: Main SOP viewer & List -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
 
         <!-- Job List Selector (Left) -->
-        <div class="lg:col-span-5 space-y-3">
-          <div class="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider px-1">
+        <div class="lg:col-span-5 space-y-2 sm:space-y-3">
+          <div class="flex items-center justify-between text-[11px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider px-1">
             <span>Daftar Menu Kerja</span>
             <span id="foundJobCount">0 Pekerjaan Ditemukan</span>
           </div>
 
-          <div id="kerjaMenuList" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+          <div id="kerjaMenuList" class="space-y-2 max-h-[400px] sm:max-h-[600px] overflow-y-auto pr-1">
             <!-- Dynamic Menu Items -->
           </div>
         </div>
 
         <!-- Selected Job Detail / Checklist Panel (Right) -->
         <div class="lg:col-span-7">
-          <div id="detailKerjaPanel" class="bg-white dark:bg-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700 min-h-[400px]">
+          <div id="detailKerjaPanel" class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-200 dark:border-slate-700 min-h-[300px] sm:min-h-[400px]">
             <!-- Dynamic Detail Rendered via JS -->
           </div>
         </div>
@@ -255,17 +267,17 @@
   </main>
 
   <!-- Footer Actions -->
-  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-slate-200 dark:border-slate-800 mt-12 text-slate-500 text-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-slate-200 dark:border-slate-800 mt-8 sm:mt-12 text-slate-500 text-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
     <div>
-      <span>Buku Saku Belajar & Kerja &copy; Integrated with Google Sheets Apps Script.</span>
+      <span>Buku Saku Belajar & Kerja &copy; GAS Integrated.</span>
     </div>
-    <div class="flex flex-wrap items-center justify-center gap-3">
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
       <button onclick="syncWithGoogleSheets()" class="hover:text-blue-600 transition flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400">
-        <i class="fa-solid fa-arrows-rotate"></i> Refresh Data Sheets
+        <i class="fa-solid fa-arrows-rotate"></i> Sync Sheets
       </button>
       <span>•</span>
       <button onclick="exportData()" class="hover:text-blue-600 transition flex items-center gap-1">
-        <i class="fa-solid fa-download"></i> Backup (JSON)
+        <i class="fa-solid fa-download"></i> Backup JSON
       </button>
       <span>•</span>
       <label class="hover:text-blue-600 transition cursor-pointer flex items-center gap-1">
@@ -276,9 +288,9 @@
   </footer>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 z-50">
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 z-50 text-xs sm:text-sm">
     <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
-    <span id="toastMessage" class="text-sm font-medium">Notifikasi</span>
+    <span id="toastMessage" class="font-medium">Notifikasi</span>
   </div>
 
   <!-- JavaScript App Logic -->
@@ -296,7 +308,7 @@
         title: 'Pengajuan Refund Transaksi Double',
         dept: 'Dept Finance & Customer Service',
         category: 'Keuangan',
-        notes: 'Pastikan bukti transfer asli dan lampiran SS percakapan customer dilampirkan di email. Kontak PIC Finance: Ibu Anita (Ext 204).',
+        notes: 'Pastikan bukti transfer asli dan SS percakapan dilampirkan. Kontak PIC Finance: Ibu Anita (Ext 204).',
         steps: [
           'Verifikasi data transaksi di Dashboard Admin & sistem payment gateway.',
           'Buka template Excel Pengajuan Refund dan isi data Rekening Tujuan Customer.',
@@ -317,7 +329,7 @@
       updateBadgeCount();
 
       if (gasWebAppUrl && !gasWebAppUrl.includes('ISI_URL_DEPLOMENT_KAMU_DISINI')) {
-        syncWithGoogleSheets(true); // silent fetch on load
+        syncWithGoogleSheets(true);
       } else {
         updateSyncStatusUI(false);
       }
@@ -327,16 +339,20 @@
     function updateSyncStatusUI(isSyncing = false) {
       const syncIcon = document.getElementById('syncIcon');
       const syncText = document.getElementById('syncText');
+      const syncIconMobile = document.getElementById('syncIconMobile');
 
       if (isSyncing) {
-        syncIcon.className = 'fa-solid fa-arrows-rotate fa-spin text-blue-500';
-        syncText.textContent = 'Syncing...';
+        if(syncIcon) syncIcon.className = 'fa-solid fa-arrows-rotate fa-spin text-blue-500';
+        if(syncIconMobile) syncIconMobile.className = 'fa-solid fa-arrows-rotate fa-spin text-blue-500';
+        if(syncText) syncText.textContent = 'Syncing...';
       } else if (gasWebAppUrl && !gasWebAppUrl.includes('ISI_URL_DEPLOMENT_KAMU_DISINI')) {
-        syncIcon.className = 'fa-solid fa-cloud-check text-emerald-500';
-        syncText.textContent = 'Connected';
+        if(syncIcon) syncIcon.className = 'fa-solid fa-cloud-check text-emerald-500';
+        if(syncIconMobile) syncIconMobile.className = 'fa-solid fa-cloud-check text-emerald-500';
+        if(syncText) syncText.textContent = 'Connected';
       } else {
-        syncIcon.className = 'fa-solid fa-cloud text-slate-400';
-        syncText.textContent = 'Local Mode';
+        if(syncIcon) syncIcon.className = 'fa-solid fa-cloud text-slate-400';
+        if(syncIconMobile) syncIconMobile.className = 'fa-solid fa-cloud text-slate-400';
+        if(syncText) syncText.textContent = 'Local Mode';
       }
     }
 
@@ -349,23 +365,21 @@
       updateSyncStatusUI(true);
 
       try {
-        // GET DATA FROM GOOGLE SHEETS
         const response = await fetch(gasWebAppUrl);
         const result = await response.json();
 
         if (result.success && Array.isArray(result.data)) {
           if (result.data.length > 0) {
             jobs = result.data;
-            saveToLocalStorage(false); // don't push back
+            saveToLocalStorage(false);
             renderBelajarList();
             renderKerjaList();
           } else if (jobs.length > 0) {
-            // Push local data if sheet is empty
             await pushDataToGoogleSheets();
           }
-          if (!silent) showToast('Data berhasil disinkronkan dengan Google Sheets!');
+          if (!silent) showToast('Data berhasil disinkronkan!');
         } else {
-          if (!silent) showToast('Gagal menarik data dari Sheets: ' + (result.message || ''), 'error');
+          if (!silent) showToast('Gagal menarik data: ' + (result.message || ''), 'error');
         }
       } catch (err) {
         console.error(err);
@@ -381,7 +395,7 @@
       try {
         await fetch(gasWebAppUrl, {
           method: 'POST',
-          mode: 'no-cors', // standard cross-origin for Apps Script
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             action: 'SYNC_ALL',
@@ -431,14 +445,14 @@
         pageBelajar.classList.remove('hidden');
         pageKerja.classList.add('hidden');
         
-        tabBelajarBtn.className = 'flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm font-semibold';
-        tabKerjaBtn.className = 'flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+        tabBelajarBtn.className = 'flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm font-semibold';
+        tabKerjaBtn.className = 'flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
       } else {
         pageBelajar.classList.add('hidden');
         pageKerja.classList.remove('hidden');
 
-        tabKerjaBtn.className = 'flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm font-semibold';
-        tabBelajarBtn.className = 'flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-4 py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
+        tabKerjaBtn.className = 'flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm font-semibold';
+        tabBelajarBtn.className = 'flex-1 sm:flex-none justify-center flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white';
 
         renderKerjaList();
       }
@@ -453,14 +467,14 @@
         const div = document.createElement('div');
         div.className = 'flex items-center gap-2 step-input-row';
         div.innerHTML = `
-          <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center justify-center shrink-0 font-mono">
+          <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] sm:text-xs font-semibold flex items-center justify-center shrink-0 font-mono">
             ${index + 1}
           </span>
           <input type="text" value="${escapeHtml(stepText)}" placeholder="Langkah ${index + 1}..." required
-            class="step-val w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition">
+            class="step-val w-full px-3 py-1.5 sm:py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition">
           ${stepsArray.length > 1 ? `
-            <button type="button" onclick="removeStepInput(this)" class="p-2 text-slate-400 hover:text-rose-500 transition shrink-0" title="Hapus Step">
-              <i class="fa-solid fa-xmark"></i>
+            <button type="button" onclick="removeStepInput(this)" class="p-1.5 text-slate-400 hover:text-rose-500 transition shrink-0" title="Hapus Step">
+              <i class="fa-solid fa-xmark text-sm"></i>
             </button>
           ` : ''}
         `;
@@ -475,13 +489,13 @@
       const div = document.createElement('div');
       div.className = 'flex items-center gap-2 step-input-row';
       div.innerHTML = `
-        <span class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center justify-center shrink-0 font-mono">
+        <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] sm:text-xs font-semibold flex items-center justify-center shrink-0 font-mono">
           ${stepCount}
         </span>
         <input type="text" placeholder="Langkah ${stepCount}..." required
-          class="step-val w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-sm outline-none transition">
-        <button type="button" onclick="removeStepInput(this)" class="p-2 text-slate-400 hover:text-rose-500 transition shrink-0" title="Hapus Step">
-          <i class="fa-solid fa-xmark"></i>
+          class="step-val w-full px-3 py-1.5 sm:py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm outline-none transition">
+        <button type="button" onclick="removeStepInput(this)" class="p-1.5 text-slate-400 hover:text-rose-500 transition shrink-0" title="Hapus Step">
+          <i class="fa-solid fa-xmark text-sm"></i>
         </button>
       `;
       container.appendChild(div);
@@ -527,7 +541,7 @@
             steps,
             updatedAt: new Date().toISOString()
           };
-          showToast('Catatan pekerjaan berhasil diperbarui!');
+          showToast('Catatan berhasil diperbarui!');
         }
       } else {
         const newJob = {
@@ -540,7 +554,7 @@
           updatedAt: new Date().toISOString()
         };
         jobs.unshift(newJob);
-        showToast('Catatan pekerjaan baru ditambahkan!');
+        showToast('Catatan pekerjaan ditambahkan!');
       }
 
       saveToLocalStorage(true);
@@ -578,13 +592,13 @@
     }
 
     function deleteJob(id) {
-      if (!confirm('Apakah kamu yakin ingin menghapus catatan pekerjaan ini?')) return;
+      if (!confirm('Hapus catatan pekerjaan ini?')) return;
       
       jobs = jobs.filter(j => j.id !== id);
       saveToLocalStorage(true);
       renderBelajarList();
       if (selectedJobId === id) selectedJobId = null;
-      showToast('Catatan pekerjaan berhasil dihapus', 'info');
+      showToast('Catatan berhasil dihapus', 'info');
     }
 
     function renderBelajarList() {
@@ -599,48 +613,48 @@
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-8 text-center text-slate-400 border border-slate-200 dark:border-slate-700">
-            <i class="fa-solid fa-folder-open text-4xl mb-2 opacity-50"></i>
-            <p class="text-sm">Belum ada catatan pekerjaan ${searchKey ? 'yang cocok' : ''}.</p>
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">
+            <i class="fa-solid fa-folder-open text-3xl mb-2 opacity-50"></i>
+            <p class="text-xs sm:text-sm">Belum ada catatan pekerjaan ${searchKey ? 'yang cocok' : ''}.</p>
           </div>
         `;
         return;
       }
 
       container.innerHTML = filtered.map(job => `
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-blue-300 transition space-y-3">
-          <div class="flex items-start justify-between gap-3">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-3.5 sm:p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:border-blue-300 transition space-y-2.5 sm:space-y-3">
+          <div class="flex items-start justify-between gap-2">
             <div>
-              <div class="flex flex-wrap items-center gap-2 mb-1">
-                <span class="px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 text-xs font-semibold">
+              <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                <span class="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 text-[10px] sm:text-xs font-semibold">
                   ${escapeHtml(job.category)}
                 </span>
-                <span class="text-xs text-slate-400 flex items-center gap-1">
-                  <i class="fa-solid fa-building text-slate-400"></i> ${escapeHtml(job.dept)}
+                <span class="text-[11px] sm:text-xs text-slate-400 flex items-center gap-1">
+                  <i class="fa-solid fa-building"></i> ${escapeHtml(job.dept)}
                 </span>
               </div>
-              <h4 class="font-bold text-base text-slate-800 dark:text-slate-100">${escapeHtml(job.title)}</h4>
+              <h4 class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">${escapeHtml(job.title)}</h4>
             </div>
 
             <div class="flex items-center space-x-1 shrink-0">
-              <button onclick="editJob('${job.id}')" title="Edit Catatan" class="p-2 text-slate-400 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
-                <i class="fa-solid fa-pen-to-square"></i>
+              <button onclick="editJob('${job.id}')" title="Edit" class="p-1.5 text-slate-400 hover:text-amber-500 rounded-lg transition">
+                <i class="fa-solid fa-pen-to-square text-sm"></i>
               </button>
-              <button onclick="deleteJob('${job.id}')" title="Hapus Catatan" class="p-2 text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
-                <i class="fa-solid fa-trash-can"></i>
+              <button onclick="deleteJob('${job.id}')" title="Hapus" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-lg transition">
+                <i class="fa-solid fa-trash-can text-sm"></i>
               </button>
             </div>
           </div>
 
           ${job.notes ? `
-            <div class="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl text-xs text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-800">
-              <span class="font-semibold text-slate-700 dark:text-slate-200"><i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Syarat/Catatan:</span> ${escapeHtml(job.notes)}
+            <div class="bg-slate-50 dark:bg-slate-900/60 p-2.5 rounded-xl text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 border border-slate-100 dark:border-slate-800 leading-relaxed">
+              <span class="font-semibold text-slate-700 dark:text-slate-200"><i class="fa-solid fa-circle-info text-blue-500 mr-1"></i> Catatan:</span> ${escapeHtml(job.notes)}
             </div>
           ` : ''}
 
-          <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-xs">
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between text-[11px] sm:text-xs">
             <span class="text-slate-500 font-medium">
-              <i class="fa-solid fa-list-ol mr-1"></i> ${job.steps.length} Langkah Kerja
+              <i class="fa-solid fa-list-ol mr-1"></i> ${job.steps.length} Langkah
             </span>
             <button onclick="openJobExecution('${job.id}')" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline flex items-center gap-1">
               Buka di Hal. Kerja <i class="fa-solid fa-arrow-right"></i>
@@ -663,7 +677,7 @@
 
       container.innerHTML = categories.map(cat => `
         <button onclick="filterKerjaCategory('${cat}')" 
-          class="px-3 py-1 rounded-full text-xs font-semibold transition ${selectedCategoryFilter === cat ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}">
+          class="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold transition ${selectedCategoryFilter === cat ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}">
           ${cat === 'ALL' ? 'Semua Kategori' : escapeHtml(cat)}
         </button>
       `).join('');
@@ -690,13 +704,13 @@
         return matchesSearch && matchesCat;
       });
 
-      document.getElementById('foundJobCount').textContent = `${filtered.length} Pekerjaan`;
+      document.getElementById('foundJobCount').textContent = `${filtered.length} Ditemukan`;
 
       if (filtered.length === 0) {
         container.innerHTML = `
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-6 text-center text-slate-400 border border-slate-200 dark:border-slate-700">
-            <i class="fa-solid fa-magnifying-glass text-3xl mb-2 opacity-40"></i>
-            <p class="text-sm font-medium">Pekerjaan tidak ditemukan.</p>
+          <div class="bg-white dark:bg-slate-800 rounded-xl p-5 text-center text-slate-400 border border-slate-200 dark:border-slate-700">
+            <i class="fa-solid fa-magnifying-glass text-2xl mb-1 opacity-40"></i>
+            <p class="text-xs font-medium">Pekerjaan tidak ditemukan.</p>
           </div>
         `;
         renderKerjaDetail(null);
@@ -711,17 +725,17 @@
         const isSelected = job.id === selectedJobId;
         return `
           <div onclick="selectKerjaItem('${job.id}')" 
-            class="cursor-pointer p-3.5 sm:p-4 rounded-xl border transition-all ${isSelected ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300'}">
+            class="cursor-pointer p-3 sm:p-4 rounded-xl border transition-all ${isSelected ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 shadow-sm' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300'}">
             <div class="flex items-center justify-between mb-1">
-              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}">
+              <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}">
                 ${escapeHtml(job.category)}
               </span>
-              <span class="text-xs text-slate-400 flex items-center gap-1">
+              <span class="text-[10px] sm:text-xs text-slate-400 flex items-center gap-1">
                 <i class="fa-solid fa-building"></i> ${escapeHtml(job.dept)}
               </span>
             </div>
-            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100 line-clamp-1">${escapeHtml(job.title)}</h4>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+            <h4 class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100 line-clamp-1">${escapeHtml(job.title)}</h4>
+            <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
               <i class="fa-solid fa-list-check text-blue-500 mr-1"></i> ${job.steps.length} Step SOP
             </p>
           </div>
@@ -745,9 +759,9 @@
       const panel = document.getElementById('detailKerjaPanel');
       if (!id) {
         panel.innerHTML = `
-          <div class="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
-            <i class="fa-solid fa-clipboard-check text-5xl mb-3 opacity-30"></i>
-            <p class="font-medium text-base">Pilih pekerjaan di sebelah kiri untuk melihat instruksi lengkap.</p>
+          <div class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
+            <i class="fa-solid fa-clipboard-check text-4xl mb-2 opacity-30"></i>
+            <p class="font-medium text-xs sm:text-sm">Pilih pekerjaan di sebelah kiri untuk melihat instruksi lengkap.</p>
           </div>
         `;
         return;
@@ -757,47 +771,47 @@
       if (!job) return;
 
       panel.innerHTML = `
-        <div class="space-y-6">
-          <div class="border-b border-slate-100 dark:border-slate-700 pb-4">
-            <div class="flex flex-wrap items-center gap-2 mb-2">
-              <span class="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wider">
+        <div class="space-y-4 sm:space-y-6">
+          <div class="border-b border-slate-100 dark:border-slate-700 pb-3 sm:pb-4">
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
+              <span class="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                 ${escapeHtml(job.category)}
               </span>
-              <span class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-semibold flex items-center gap-1.5">
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] sm:text-xs font-semibold flex items-center gap-1">
                 <i class="fa-solid fa-network-wired"></i> Alur: ${escapeHtml(job.dept)}
               </span>
             </div>
 
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
+            <h2 class="text-base sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
               ${escapeHtml(job.title)}
             </h2>
           </div>
 
           ${job.notes ? `
-            <div class="bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 p-4 rounded-r-xl">
-              <h5 class="text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                <i class="fa-solid fa-lightbulb text-amber-500"></i> Catatan & Syarat Penting:
+            <div class="bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500 p-3 sm:p-4 rounded-r-xl">
+              <h5 class="text-[10px] sm:text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider mb-0.5 flex items-center gap-1">
+                <i class="fa-solid fa-lightbulb text-amber-500"></i> Catatan & Syarat:
               </h5>
               <p class="text-xs sm:text-sm text-amber-900 dark:text-amber-200 leading-relaxed whitespace-pre-line">${escapeHtml(job.notes)}</p>
             </div>
           ` : ''}
 
-          <div class="space-y-3">
+          <div class="space-y-2.5 sm:space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base flex items-center gap-2">
-                <i class="fa-solid fa-list-ol text-blue-600"></i> Langkah Pengerjaan (Interactive SOP)
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 text-xs sm:text-base flex items-center gap-1.5">
+                <i class="fa-solid fa-list-ol text-blue-600"></i> Langkah SOP
               </h3>
-              <button onclick="resetChecklist('${job.id}')" class="text-xs text-slate-400 hover:text-blue-600 transition flex items-center gap-1">
-                <i class="fa-solid fa-rotate-left"></i> Reset Checklist
+              <button onclick="resetChecklist('${job.id}')" class="text-[11px] sm:text-xs text-slate-400 hover:text-blue-600 transition flex items-center gap-1">
+                <i class="fa-solid fa-rotate-left"></i> Reset
               </button>
             </div>
 
-            <div class="space-y-2.5">
+            <div class="space-y-2">
               ${job.steps.map((step, idx) => `
-                <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition cursor-pointer group">
+                <label class="flex items-start gap-2.5 p-2.5 sm:p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition cursor-pointer group">
                   <input type="checkbox" 
-                    class="mt-0.5 w-5 h-5 text-blue-600 rounded border-slate-300 dark:border-slate-600 focus:ring-blue-500 cursor-pointer">
-                  <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 group-has-[:checked]:line-through group-has-[:checked]:text-slate-400 transition">
+                    class="mt-0.5 w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded border-slate-300 dark:border-slate-600 focus:ring-blue-500 cursor-pointer shrink-0">
+                  <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 group-has-[:checked]:line-through group-has-[:checked]:text-slate-400 transition leading-normal">
                     <span class="font-bold mr-1 text-slate-400 font-mono">${idx + 1}.</span> ${escapeHtml(step)}
                   </div>
                 </label>
@@ -805,9 +819,9 @@
             </div>
           </div>
 
-          <div class="pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-end">
-            <button onclick="editJob('${job.id}'); switchTab('belajar');" class="px-4 py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl transition flex items-center gap-1.5">
-              <i class="fa-solid fa-pen-to-square"></i> Edit SOP Pekerjaan Ini
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-700 flex justify-end">
+            <button onclick="editJob('${job.id}'); switchTab('belajar');" class="px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl transition flex items-center gap-1">
+              <i class="fa-solid fa-pen-to-square"></i> Edit SOP Ini
             </button>
           </div>
         </div>
@@ -816,17 +830,17 @@
 
     function resetChecklist(jobId) {
       renderKerjaDetail(jobId);
-      showToast('Checklist pengerjaan direset');
+      showToast('Checklist direset');
     }
 
     // --- DARK MODE ---
     function initTheme() {
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-sun text-amber-400';
+        updateDarkModeIcons(true);
       } else {
         document.documentElement.classList.remove('dark');
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-moon';
+        updateDarkModeIcons(false);
       }
     }
 
@@ -834,12 +848,19 @@
       if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
         localStorage.theme = 'light';
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-moon';
+        updateDarkModeIcons(false);
       } else {
         document.documentElement.classList.add('dark');
         localStorage.theme = 'dark';
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-sun text-amber-400';
+        updateDarkModeIcons(true);
       }
+    }
+
+    function updateDarkModeIcons(isDark) {
+      const desktop = document.querySelector('.darkModeIconDesktop');
+      const mobile = document.querySelector('.darkModeIconMobile');
+      if (desktop) desktop.className = `darkModeIconDesktop fa-solid ${isDark ? 'fa-sun text-amber-400' : 'fa-moon'}`;
+      if (mobile) mobile.className = `darkModeIconMobile fa-solid ${isDark ? 'fa-sun text-amber-400' : 'fa-moon'}`;
     }
 
     // --- BACKUP DATA ---
@@ -870,7 +891,7 @@
             showToast('Data berhasil di-import!');
           }
         } catch (err) {
-          showToast('Gagal membaca file JSON', 'error');
+          showToast('Gagal membaca JSON', 'error');
         }
       };
       reader.readAsText(file);
