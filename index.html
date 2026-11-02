@@ -539,26 +539,38 @@
       }
     }
 
-    // Apps Script Sync Functions
+    // Apps Script Sync Functions (Menggunakan JSONP)
     function fetchJobsFromGAS() {
       if (!GAS_WEB_APP_URL) return;
 
       setSyncStatus('syncing', 'Menyelaraskan data...');
 
-      fetch(`${GAS_WEB_APP_URL}?action=getJobs`)
-        .then(res => res.json())
-        .then(data => {
-          if (data && Array.isArray(data)) {
-            jobDatabase = data;
-            saveJobsToStorage();
-            renderBelajarList();
-            setSyncStatus('online', 'Terhubung (Synced)');
-          }
-        })
-        .catch(err => {
-          console.warn('Sync GAS failed, fallback offline:', err);
-          setSyncStatus('offline', 'Mode Offline');
-        });
+      const callbackName = 'gasCallback_' + Date.now();
+      
+      window[callbackName] = function(data) {
+        if (data && Array.isArray(data)) {
+          jobDatabase = data;
+          saveJobsToStorage();
+          renderBelajarList();
+          setSyncStatus('online', 'Terhubung (Synced)');
+        } else {
+          setSyncStatus('online', 'Terhubung (Belum ada data)');
+        }
+        document.getElementById(callbackName)?.remove();
+        delete window[callbackName];
+      };
+
+      const script = document.createElement('script');
+      script.id = callbackName;
+      script.src = `${GAS_WEB_APP_URL}?action=getJobs&callback=${callbackName}`;
+      script.onerror = function() {
+        console.warn('Sync GAS failed, fallback offline');
+        setSyncStatus('offline', 'Mode Offline');
+        document.getElementById(callbackName)?.remove();
+        delete window[callbackName];
+      };
+      
+      document.body.appendChild(script);
     }
 
     function syncJobToGAS(job) {
@@ -572,7 +584,10 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'saveJob', job: job })
       })
-      .then(() => setSyncStatus('online', 'Tersimpan di Sheets'))
+      .then(() => {
+        setSyncStatus('online', 'Tersimpan di Sheets');
+        setTimeout(fetchJobsFromGAS, 1000);
+      })
       .catch(() => setSyncStatus('offline', 'Gagal Simpan ke Sheets'));
     }
 
